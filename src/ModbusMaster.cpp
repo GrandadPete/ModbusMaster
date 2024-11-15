@@ -72,6 +72,10 @@ void ModbusMaster::begin(uint8_t slave, Stream &serial)
 #endif
 }
 
+void ModbusMaster::setSlaveId(uint8_t slave)
+{
+   _u8MBSlave = slave;
+}
 
 void ModbusMaster::beginTransmission(uint16_t u16Address)
 {

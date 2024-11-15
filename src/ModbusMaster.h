@@ -31,7 +31,7 @@ Arduino library for communicating with Modbus slaves over RS232/485 (via RTU pro
 
 */
 
-  
+
 #ifndef ModbusMaster_h
 #define ModbusMaster_h
 
@@ -70,11 +70,12 @@ class ModbusMaster
 {
   public:
     ModbusMaster();
-   
-    void begin(uint8_t, Stream &serial);
-    void idle(void (*)());
-    void preTransmission(void (*)());
-    void postTransmission(void (*)());
+
+    virtual void begin(uint8_t, Stream &serial);
+    virtual void setSlaveId(uint8_t slave);
+    virtual void idle(void (*)());
+    virtual void preTransmission(void (*)());
+    virtual void postTransmission(void (*)());
 
     // Modbus exception codes
     /**
@@ -187,37 +188,37 @@ class ModbusMaster
     @ingroup constant
     */
     static const uint8_t ku8MBInvalidCRC                 = 0xE3;
-    
-    uint16_t getResponseBuffer(uint8_t);
-    void     clearResponseBuffer();
-    uint8_t  setTransmitBuffer(uint8_t, uint16_t);
-    void     clearTransmitBuffer();
-    
-    void beginTransmission(uint16_t);
-    uint8_t requestFrom(uint16_t, uint16_t);
-    void sendBit(bool);
-    void send(uint8_t);
-    void send(uint16_t);
-    void send(uint32_t);
-    uint8_t available(void);
-    uint16_t receive(void);
-    
-    
-    uint8_t  readCoils(uint16_t, uint16_t);
-    uint8_t  readDiscreteInputs(uint16_t, uint16_t);
-    uint8_t  readHoldingRegisters(uint16_t, uint16_t);
-    uint8_t  readInputRegisters(uint16_t, uint8_t);
-    uint8_t  writeSingleCoil(uint16_t, uint8_t);
-    uint8_t  writeSingleRegister(uint16_t, uint16_t);
-    uint8_t  writeMultipleCoils(uint16_t, uint16_t);
-    uint8_t  writeMultipleCoils();
-    uint8_t  writeMultipleRegisters(uint16_t, uint16_t);
-    uint8_t  writeMultipleRegisters();
-    uint8_t  maskWriteRegister(uint16_t, uint16_t, uint16_t);
-    uint8_t  readWriteMultipleRegisters(uint16_t, uint16_t, uint16_t, uint16_t);
-    uint8_t  readWriteMultipleRegisters(uint16_t, uint16_t);
-    
-  private:
+
+    virtual uint16_t getResponseBuffer(uint8_t);
+    virtual void     clearResponseBuffer();
+    virtual uint8_t  setTransmitBuffer(uint8_t, uint16_t);
+    virtual void     clearTransmitBuffer();
+
+    virtual void beginTransmission(uint16_t);
+    virtual uint8_t requestFrom(uint16_t, uint16_t);
+    virtual void sendBit(bool);
+    virtual void send(uint8_t);
+    virtual void send(uint16_t);
+    virtual void send(uint32_t);
+    virtual uint8_t available(void);
+    virtual uint16_t receive(void);
+
+
+    virtual uint8_t  readCoils(uint16_t, uint16_t);
+    virtual uint8_t  readDiscreteInputs(uint16_t, uint16_t);
+    virtual uint8_t  readHoldingRegisters(uint16_t, uint16_t);
+    virtual uint8_t  readInputRegisters(uint16_t, uint8_t);
+    virtual uint8_t  writeSingleCoil(uint16_t, uint8_t);
+    virtual uint8_t  writeSingleRegister(uint16_t, uint16_t);
+    virtual uint8_t  writeMultipleCoils(uint16_t, uint16_t);
+    virtual uint8_t  writeMultipleCoils();
+    virtual uint8_t  writeMultipleRegisters(uint16_t, uint16_t);
+    virtual uint8_t  writeMultipleRegisters();
+    virtual uint8_t  maskWriteRegister(uint16_t, uint16_t, uint16_t);
+    virtual uint8_t  readWriteMultipleRegisters(uint16_t, uint16_t, uint16_t, uint16_t);
+    virtual uint8_t  readWriteMultipleRegisters(uint16_t, uint16_t);
+
+  protected:
     Stream* _serial;                                             ///< reference to serial port object
     uint8_t  _u8MBSlave;                                         ///< Modbus slave (1..255) initialized in begin()
     static const uint8_t ku8MaxBufferSize                = 64;   ///< size of response/transmit buffers    
