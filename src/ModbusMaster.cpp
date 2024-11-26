@@ -51,7 +51,7 @@ ModbusMaster::ModbusMaster(void)
   _u32FailedTransactions = 0;
 }
 
-void getTransactionCounts( uint32_t *total, uint32_t *failed )
+void ModbusMaster::getTransactionCounts( uint32_t *total, uint32_t *failed )
 {
    if ( total )
    {
